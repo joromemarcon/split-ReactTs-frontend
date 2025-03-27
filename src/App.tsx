@@ -1,24 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+//import "./App.css"; // Import CSS for global or app-specific styles
+import PayeePage from "./Pages/PayeeAccountPage/PayeePage";
+
+/****************************
+        RECEIPT MODEL
+*****************************
+{
+    "id": 1,
+    "receiptCode": "123receipt123",
+    "transactionNumber": "123",
+    "establishmentName": "Subway",
+    "transactionDateTime": "2/3/2025",
+    "items": [
+      {
+        "id": 1,
+        "itemName": "Cookies",
+        "itemPrice": 2.99,
+        "receiptId": 1
+      },
+      {
+        "id": 2,
+        "itemName": "Sandwhich",
+        "itemPrice": 9.99,
+        "receiptId": 1
+      }
+    ]
+  }
+
+*/
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <PayeePage />
     </div>
   );
 }

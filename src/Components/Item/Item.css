@@ -1,0 +1,67 @@
+/* Parent container for each item */
+.item {
+  width: 25%; /* 1/4 of the container's width */
+  min-width: 200px; /* Ensure it doesn't get too small */
+  max-width: 300px; /* Optionally limit the maximum width */
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* Hover effect for the floating div */
+.item:hover {
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Styling for the checkbox */
+.item-checkbox {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border: 2px solid #999;
+  border-radius: 4px;
+  appearance: none;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Checkbox appearance when selected */
+.item-checkbox:checked {
+  background-color: #007bff;
+  border-color: #007bff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M13.485 3.071a.75.75 0 010 1.061L6.784 10.833a.75.75 0 01-1.06 0L2.515 7.625a.75.75 0 011.06-1.061L6.254 9.22l6.172-6.172a.75.75 0 011.06 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Styling for the item name */
+.item-name {
+  flex-grow: 1; /* Allow the name to take up available space */
+  font-size: 16px;
+  color: #333;
+  margin-left: 10px;
+  text-align: left;
+}
+
+/* Styling for the item price */
+.item-price {
+  font-size: 16px;
+  color: #555;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+/* Styling for the item paid by */
+.item-paid-by {
+  font-size: 16px;
+  color: #555;
+  margin-left: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
