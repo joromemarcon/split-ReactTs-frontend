@@ -6,6 +6,7 @@ import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import logo from "../Assets/Images/split-logo.png";
 import React, { useState } from "react";
 import Button from "../Components/Button";
+import { useSearchBarContext } from "../Context/SearchBarContext";
 
 interface isLoggedInProps {
   isLoggedIn: boolean;
@@ -13,6 +14,7 @@ interface isLoggedInProps {
 
 const Header = ({ isLoggedIn }: isLoggedInProps) => {
   const [showFullWidthSearch, setShowFullWidthSearch] = useState(false);
+  const { onClick, handleChange, search } = useSearchBarContext();
   return (
     <div>
       <div className="flex gap-10 lg:gap-20 justify-between pt-2 mb-6 mx-4">
@@ -44,11 +46,16 @@ const Header = ({ isLoggedIn }: isLoggedInProps) => {
             )}
             <div className="flex flex-grow max-w-[600px]">
               <input
+                onChange={handleChange}
+                value={search}
                 type="search"
                 placeholder="Search Receipt"
                 className="rounded-l-full border border-secondary-border shadow-inner shadow-secondary py-1 px-4 text-lg w-full focus:border-blue-500 outline-none"
               ></input>
-              <Button className="py-2 px-4 rounded-r-full border-secondary-border border border-l-0 flex-shrink-0">
+              <Button
+                onClick={onClick}
+                className="py-2 px-4 rounded-r-full border-secondary-border border border-l-0 flex-shrink-0"
+              >
                 <CiSearch />
               </Button>
             </div>

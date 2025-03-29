@@ -1,6 +1,7 @@
 import React from "react";
 //import "./App.css"; // Import CSS for global or app-specific styles
 import PayeePage from "./Pages/PayeeAccountPage/PayeePage";
+import { SearchBarProvider } from "./Context/SearchBarContext";
 
 /****************************
         RECEIPT MODEL
@@ -31,9 +32,11 @@ import PayeePage from "./Pages/PayeeAccountPage/PayeePage";
 
 function App() {
   return (
-    <div>
-      <PayeePage />
-    </div>
+    <SearchBarProvider>
+      <div>
+        <PayeePage />
+      </div>
+    </SearchBarProvider>
   );
 }
 
