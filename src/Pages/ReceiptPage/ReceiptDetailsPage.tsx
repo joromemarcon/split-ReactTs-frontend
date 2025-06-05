@@ -40,7 +40,6 @@ const ReceiptDetailsPage = () => {
 
   return (
     <div className="Receipt-Home-Page">
-      <h1>RECEIPT PAGE TESTING</h1>
       <div className="Items-Container">
         <h2>This is unpaid section</h2>
         {unPaidItemList.map((item) => (

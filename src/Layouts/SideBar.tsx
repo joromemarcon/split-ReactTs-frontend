@@ -16,19 +16,47 @@ import { twMerge } from "tailwind-merge";
 import { text } from "stream/consumers";
 import { IoReceiptOutline } from "react-icons/io5";
 import { FaPlusCircle } from "react-icons/fa";
+import { useContent } from "../Context/ContentContext";
+
+interface SideBarProps {}
 
 const SideBar = () => {
+  const { setCurrentContent } = useContent();
   return (
     <>
       <aside className="sticky top-0 overflow-y-auto scrollbar-hidden pb-4 flex flex-col ml-1 lg:hidden">
-        <SmallSideBarItem Icon={Home} title="Home" url="/" />
-        <SmallSideBarItem Icon={ReceiptText} title="Receipts" url="/" />
-        <SmallSideBarItem Icon={FilePlus2} title="New Receipt" url="/" />
+        <SmallSideBarItem
+          Icon={Home}
+          title="Home"
+          onClick={() => setCurrentContent("home")}
+        />
+        <SmallSideBarItem
+          Icon={ReceiptText}
+          title="Receipts"
+          onClick={() => setCurrentContent("receipts")}
+        />
+        <SmallSideBarItem
+          Icon={FilePlus2}
+          title="New Receipt"
+          onClick={() => setCurrentContent("new-receipt")}
+        />
       </aside>
       <aside className="hidden lg:flex w-56 lg:sticky absolute top-16 overflow-y-auto scrollbar-hidden pb-4 flex-col gap-2 px-2">
-        <LargeSideBarItem Icon={Home} title="Home" url="/" />
-        <LargeSideBarItem Icon={ReceiptText} title="Receipts" url="/" />
-        <LargeSideBarItem Icon={FilePlus2} title="New Receipt" url="/" />
+        <LargeSideBarItem
+          Icon={Home}
+          title="Home"
+          onClick={() => setCurrentContent("home")}
+        />
+        <LargeSideBarItem
+          Icon={ReceiptText}
+          title="Receipts"
+          onClick={() => setCurrentContent("receipts")}
+        />
+        <LargeSideBarItem
+          Icon={FilePlus2}
+          title="New Receipt"
+          onClick={() => setCurrentContent("new-receipt")}
+        />
       </aside>
     </>
   );
@@ -37,12 +65,12 @@ const SideBar = () => {
 interface SmallSideBarItemProps {
   Icon: ElementType;
   title: string;
-  url: string;
+  onClick: () => void;
 }
-function SmallSideBarItem({ Icon, title, url }: SmallSideBarItemProps) {
+function SmallSideBarItem({ Icon, title, onClick }: SmallSideBarItemProps) {
   return (
     <a
-      href={url}
+      onClick={onClick}
       className={twMerge(
         buttonStyles({ buttonVariant: "ghost" }),
         "py-4 px-1 flex flex-col items-center rounded-lg gap-1"
@@ -57,18 +85,18 @@ function SmallSideBarItem({ Icon, title, url }: SmallSideBarItemProps) {
 interface LargeSideBarItemProps {
   Icon: ElementType;
   title: string;
-  url: string;
+  onClick: () => void;
   isActive?: Boolean;
 }
 function LargeSideBarItem({
   Icon,
   title,
-  url,
+  onClick,
   isActive = false,
 }: LargeSideBarItemProps) {
   return (
     <a
-      href={url}
+      onClick={onClick}
       className={twMerge(
         buttonStyles({ buttonVariant: "ghost" }),
         `w-full flex items-center rounded-lg gap-4 p-3 ${
