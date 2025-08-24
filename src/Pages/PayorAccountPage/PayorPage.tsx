@@ -4,7 +4,7 @@ import Header from "../../Layouts/Header";
 const PayorPage = () => {
   return (
     <div>
-      <Header isLoggedIn={true}></Header>
+      <Header />
     </div>
   );
 };

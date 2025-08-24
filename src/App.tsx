@@ -3,9 +3,13 @@ import React from "react";
 import PayeePage from "./Pages/PayeeAccountPage/PayeePage";
 import { SearchBarProvider } from "./Context/SearchBarContext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import PayorPage from "./Pages/PayorAccountPage/PayorPage";
 import ReceiptDetailsPage from "./Pages/ReceiptPage/ReceiptDetailsPage";
+import LoginPage from "./Pages/Auth/LoginPage";
+import RegisterPage from "./Pages/Auth/RegisterPage";
+import ForgotPasswordPage from "./Pages/Auth/ForgotPasswordPage";
+import ProtectedRoute from "./Components/ProtectedRoute";
 import { ContentProvider } from "./Context/ContentContext";
+import { AuthProvider } from "./Context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -37,35 +41,57 @@ import "react-toastify/dist/ReactToastify.css";
 */
 const router = createBrowserRouter([
   {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPasswordPage />,
+  },
+  {
     path: "/",
     element: (
-      <ContentProvider>
-        <PayeePage />
-      </ContentProvider>
+      <ProtectedRoute>
+        <ContentProvider>
+          <PayeePage />
+        </ContentProvider>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/payee",
     element: (
-      <ContentProvider>
-        <PayeePage />
-      </ContentProvider>
+      <ProtectedRoute>
+        <ContentProvider>
+          <PayeePage />
+        </ContentProvider>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/receipt",
-    element: <ReceiptDetailsPage />,
+    element: (
+      <ProtectedRoute>
+        <ReceiptDetailsPage />
+      </ProtectedRoute>
+    ),
   },
 ]);
 
 function App() {
   return (
-    <SearchBarProvider>
-      <div>
-        <RouterProvider router={router}></RouterProvider>
-        <ToastContainer />
-      </div>
-    </SearchBarProvider>
+    <AuthProvider>
+      <SearchBarProvider>
+        <div>
+          <RouterProvider router={router}></RouterProvider>
+          <ToastContainer />
+        </div>
+      </SearchBarProvider>
+    </AuthProvider>
   );
 }
 

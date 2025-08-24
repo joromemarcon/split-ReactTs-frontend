@@ -10,6 +10,8 @@ import React, { createContext, ReactNode, useContext, useState } from "react";
 interface ContentContextType {
   currentContent: string;
   setCurrentContent: (content: string) => void;
+  selectedReceiptId: number | null;
+  setSelectedReceiptId: (receiptId: number | null) => void;
 }
 
 const ContentContext = createContext<ContentContextType | null>(null);
@@ -27,9 +29,15 @@ interface ContentProviderProps {
 
 export function ContentProvider({ children }: ContentProviderProps) {
   const [currentContent, setCurrentContent] = useState<string>("home");
+  const [selectedReceiptId, setSelectedReceiptId] = useState<number | null>(null);
 
   return (
-    <ContentContext.Provider value={{ currentContent, setCurrentContent }}>
+    <ContentContext.Provider value={{ 
+      currentContent, 
+      setCurrentContent, 
+      selectedReceiptId, 
+      setSelectedReceiptId 
+    }}>
       {children}
     </ContentContext.Provider>
   );
