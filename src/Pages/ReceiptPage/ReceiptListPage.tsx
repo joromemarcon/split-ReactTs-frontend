@@ -19,7 +19,7 @@ const ReceiptListPage = () => {
   const [expandedReceiptId, setExpandedReceiptId] = useState<number | null>(null);
   const [filter, setFilter] = useState<"all" | "owned" | "joined">("all");
   const { isAuthenticated, user } = useAuth();
-  const { search, filterReceipts, globalReceipts, isLoading } = useSearchBarContext();
+  const { search, filterReceipts, globalReceipts, isLoading, refreshReceipts } = useSearchBarContext();
   const { selectedReceiptId, setSelectedReceiptId } = useContent();
 
   // Use global receipts from SearchBarContext to avoid duplicate API calls
@@ -208,6 +208,7 @@ const ReceiptListPage = () => {
               receipt={receipt}
               onClick={() => handleReceiptClick(receipt)}
               isExpanded={expandedReceiptId === receipt.id}
+              onItemsClaimed={refreshReceipts}
             />
           </div>
         ))}

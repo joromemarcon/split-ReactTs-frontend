@@ -19,6 +19,7 @@ interface SearchBarContextType {
   globalReceipts: Receipt[];
   getSearchResults: () => Receipt[];
   isLoading: boolean;
+  refreshReceipts: () => Promise<void>;
 }
 const SearchBarContext = createContext<SearchBarContextType | null>(null);
 
@@ -127,17 +128,35 @@ export function SearchBarProvider({ children }: SearchBarProviderProps) {
     return filterReceipts(globalReceipts);
   };
 
+  // Refresh receipts manually (e.g., after claiming items)
+  const refreshReceipts = async () => {
+    if (!isAuthenticated || !token) {
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const receipts = await getUserReceipts(token);
+      setGlobalReceipts(receipts || []);
+    } catch (error) {
+      console.error('SearchBarContext: Error refreshing receipts:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <SearchBarContext.Provider 
-      value={{ 
-        onClick, 
-        search, 
-        handleChange, 
-        filterReceipts, 
-        clearSearch, 
-        globalReceipts, 
-        getSearchResults, 
-        isLoading 
+    <SearchBarContext.Provider
+      value={{
+        onClick,
+        search,
+        handleChange,
+        filterReceipts,
+        clearSearch,
+        globalReceipts,
+        getSearchResults,
+        isLoading,
+        refreshReceipts
       }}
     >
       {children}
