@@ -1,7 +1,8 @@
 /**************************
  *
  *  useContext to centralize setting content desired in Payee and Payor page
- *  This is triggered when user selects what content to render from the side bar
+ *  This is triggered when user selects what content to render from the side bar and
+ *  other divs/buttons
  *
  */
 
@@ -29,15 +30,19 @@ interface ContentProviderProps {
 
 export function ContentProvider({ children }: ContentProviderProps) {
   const [currentContent, setCurrentContent] = useState<string>("home");
-  const [selectedReceiptId, setSelectedReceiptId] = useState<number | null>(null);
+  const [selectedReceiptId, setSelectedReceiptId] = useState<number | null>(
+    null
+  );
 
   return (
-    <ContentContext.Provider value={{ 
-      currentContent, 
-      setCurrentContent, 
-      selectedReceiptId, 
-      setSelectedReceiptId 
-    }}>
+    <ContentContext.Provider
+      value={{
+        currentContent,
+        setCurrentContent,
+        selectedReceiptId,
+        setSelectedReceiptId,
+      }}
+    >
       {children}
     </ContentContext.Provider>
   );

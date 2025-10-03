@@ -14,7 +14,7 @@ const PayeePage = () => {
     console.log("API Response:", response);
   })();
 
-  const { currentContent } = useContent();
+  const { currentContent, setCurrentContent } = useContent();
 
   const renderContent = () => {
     switch (currentContent) {
@@ -29,7 +29,10 @@ const PayeePage = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+              <div
+                onClick={() => setCurrentContent("receipts")}
+                className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow cursor-pointer"
+              >
                 <div className="text-indigo-600 mb-4">
                   <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -38,8 +41,11 @@ const PayeePage = () => {
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">View Receipts</h3>
                 <p className="text-gray-600">Browse and manage all your receipts in one place.</p>
               </div>
-              
-              <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+
+              <div
+                onClick={() => setCurrentContent("new-receipt")}
+                className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow cursor-pointer"
+              >
                 <div className="text-green-600 mb-4">
                   <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -48,15 +54,18 @@ const PayeePage = () => {
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Create Receipt</h3>
                 <p className="text-gray-600">Add new receipts and split expenses with friends.</p>
               </div>
-              
-              <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow">
+
+              <div
+                onClick={() => setCurrentContent("join-receipt")}
+                className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-shadow cursor-pointer"
+              >
                 <div className="text-purple-600 mb-4">
                   <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Search Receipts</h3>
-                <p className="text-gray-600">Find receipts by name, items, or amounts using the search bar.</p>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Join Receipt</h3>
+                <p className="text-gray-600">Join existing receipts shared by friends using a code.</p>
               </div>
             </div>
           </div>
