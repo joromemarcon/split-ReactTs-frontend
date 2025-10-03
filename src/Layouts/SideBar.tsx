@@ -40,6 +40,11 @@ const SideBar = () => {
           title="New Receipt"
           onClick={() => setCurrentContent("new-receipt")}
         />
+        <SmallSideBarItem
+          Icon={Repeat}
+          title="Join Receipt"
+          onClick={() => setCurrentContent("join-receipt")}
+        />
       </aside>
       <aside className="hidden lg:flex w-56 lg:sticky absolute top-16 overflow-y-auto scrollbar-hidden pb-4 flex-col gap-2 px-2">
         <LargeSideBarItem
@@ -56,6 +61,11 @@ const SideBar = () => {
           Icon={FilePlus2}
           title="New Receipt"
           onClick={() => setCurrentContent("new-receipt")}
+        />
+        <LargeSideBarItem
+          Icon={Repeat}
+          title="Join Receipt"
+          onClick={() => setCurrentContent("join-receipt")}
         />
       </aside>
     </>

@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import { useContent } from "../../Context/ContentContext";
 import ReceiptListPage from "../ReceiptPage/ReceiptListPage";
 import NewReceiptPage from "../ReceiptPage/NewReceiptPage";
+import JoinReceiptPage from "../ReceiptPage/JoinReceiptPage";
 import { apiTest } from "../../apiTest";
 
 const PayeePage = () => {
@@ -64,6 +65,8 @@ const PayeePage = () => {
         return <ReceiptListPage />;
       case "new-receipt":
         return <NewReceiptPage />;
+      case "join-receipt":
+        return <JoinReceiptPage />;
     }
   };
   return (

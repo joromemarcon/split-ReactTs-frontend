@@ -3,7 +3,6 @@ import React from "react";
 import PayeePage from "./Pages/PayeeAccountPage/PayeePage";
 import { SearchBarProvider } from "./Context/SearchBarContext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ReceiptDetailsPage from "./Pages/ReceiptPage/ReceiptDetailsPage";
 import LoginPage from "./Pages/Auth/LoginPage";
 import RegisterPage from "./Pages/Auth/RegisterPage";
 import ForgotPasswordPage from "./Pages/Auth/ForgotPasswordPage";
@@ -69,14 +68,6 @@ const router = createBrowserRouter([
         <ContentProvider>
           <PayeePage />
         </ContentProvider>
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/receipt",
-    element: (
-      <ProtectedRoute>
-        <ReceiptDetailsPage />
       </ProtectedRoute>
     ),
   },
