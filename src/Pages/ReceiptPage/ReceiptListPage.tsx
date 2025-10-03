@@ -17,6 +17,7 @@ import { useContent } from "../../Context/ContentContext";
 
 const ReceiptListPage = () => {
   const [expandedReceiptId, setExpandedReceiptId] = useState<number | null>(null);
+  const [filter, setFilter] = useState<"all" | "owned" | "joined">("all");
   const { isAuthenticated, user } = useAuth();
   const { search, filterReceipts, globalReceipts, isLoading } = useSearchBarContext();
   const { selectedReceiptId, setSelectedReceiptId } = useContent();
@@ -25,10 +26,23 @@ const ReceiptListPage = () => {
   const receipts = globalReceipts;
   const error = null; // Error handling is now in SearchBarContext
 
-  // Filter receipts based on search term
+  // Filter receipts based on search term and ownership filter
   const filteredReceipts = useMemo(() => {
-    return filterReceipts(receipts);
-  }, [receipts, filterReceipts]);
+    let filtered = filterReceipts(receipts);
+
+    // Apply ownership filter
+    if (filter === "owned") {
+      filtered = filtered.filter(r => r.isOwner === true);
+    } else if (filter === "joined") {
+      filtered = filtered.filter(r => r.isOwner === false);
+    }
+
+    return filtered;
+  }, [receipts, filterReceipts, filter]);
+
+  // Count owned and joined receipts
+  const ownedCount = receipts.filter(r => r.isOwner === true).length;
+  const joinedCount = receipts.filter(r => r.isOwner === false).length;
 
   // Handle receipt selection from search results
   useEffect(() => {
@@ -140,7 +154,7 @@ const ReceiptListPage = () => {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">My Receipts</h1>
         <p className="text-gray-600 text-lg">
-          Welcome back, {user?.userName}! 
+          Welcome back, {user?.userName}!
           {search && search.trim() !== "" ? (
             <>
               {" "}Found {filteredReceipts.length} of {receipts.length} receipt{receipts.length !== 1 ? 's' : ''} matching "{search}".
@@ -151,6 +165,40 @@ const ReceiptListPage = () => {
             </>
           )}
         </p>
+      </div>
+
+      {/* Filter Buttons */}
+      <div className="mb-6 flex gap-3">
+        <button
+          onClick={() => setFilter("all")}
+          className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+            filter === "all"
+              ? "bg-indigo-600 text-white"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+          }`}
+        >
+          All ({receipts.length})
+        </button>
+        <button
+          onClick={() => setFilter("owned")}
+          className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+            filter === "owned"
+              ? "bg-green-600 text-white"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+          }`}
+        >
+          Owned ({ownedCount})
+        </button>
+        <button
+          onClick={() => setFilter("joined")}
+          className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+            filter === "joined"
+              ? "bg-purple-600 text-white"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+          }`}
+        >
+          Joined ({joinedCount})
+        </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -8,6 +8,9 @@ interface ReceiptProps {
 }
 
 const Receipt: React.FC<ReceiptProps> = ({ receipt, onClick, isExpanded = false }) => {
+  // Debug logging
+  console.log('Receipt component - isOwner:', receipt.isOwner, 'for', receipt.establishmentName);
+
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -30,24 +33,42 @@ const Receipt: React.FC<ReceiptProps> = ({ receipt, onClick, isExpanded = false 
 
   if (!isExpanded) {
     // Compact card view
+    const borderColor = receipt.isOwner === true
+      ? 'border-green-200 hover:border-green-300'
+      : receipt.isOwner === false
+      ? 'border-purple-200 hover:border-purple-300'
+      : 'border-gray-200 hover:border-indigo-200';
+
     return (
-      <div 
-        className={`border border-gray-200 rounded-xl p-4 bg-white shadow-sm transition-all duration-300 ${
-          onClick ? 'cursor-pointer hover:shadow-lg hover:scale-105 hover:border-indigo-200' : ''
+      <div
+        className={`border-2 ${borderColor} rounded-xl p-4 bg-white shadow-sm transition-all duration-300 ${
+          onClick ? 'cursor-pointer hover:shadow-lg hover:scale-105' : ''
         }`}
         onClick={onClick}
       >
         <div className="flex justify-between items-start mb-3">
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-bold text-gray-900 truncate">{receipt.establishmentName}</h3>
-            <p className="text-sm text-gray-500 mt-1">{formatDate(receipt.transactionDateTime)}</p>
+            <div className="flex items-center gap-2 mb-1">
+              <h3 className="text-lg font-bold text-gray-900 truncate">{receipt.establishmentName}</h3>
+              {receipt.isOwner === true && (
+                <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
+                  Owner
+                </span>
+              )}
+              {receipt.isOwner === false && (
+                <span className="px-2 py-0.5 bg-purple-100 text-purple-700 text-xs font-semibold rounded-full">
+                  Member
+                </span>
+              )}
+            </div>
+            <p className="text-sm text-gray-500">{formatDate(receipt.transactionDateTime)}</p>
           </div>
           <div className="ml-4 text-right">
             <div className="text-lg font-bold text-green-600">{formatCurrency(receipt.transactionTotal)}</div>
             <div className="text-xs text-gray-400 font-mono">#{receipt.receiptCode}</div>
           </div>
         </div>
-        
+
         <div className="flex justify-between items-center text-sm text-gray-600">
           <span>{receipt.items?.length || 0} item{(receipt.items?.length || 0) !== 1 ? 's' : ''}</span>
           <span className="text-indigo-600 font-medium">Click to expand</span>
@@ -57,15 +78,33 @@ const Receipt: React.FC<ReceiptProps> = ({ receipt, onClick, isExpanded = false 
   }
 
   // Expanded detailed view
+  const expandedBorderColor = receipt.isOwner === true
+    ? 'border-green-300'
+    : receipt.isOwner === false
+    ? 'border-purple-300'
+    : 'border-indigo-200';
+
   return (
-    <div 
-      className="border border-indigo-200 rounded-xl p-6 bg-white shadow-lg transition-all duration-300"
+    <div
+      className={`border-2 ${expandedBorderColor} rounded-xl p-6 bg-white shadow-lg transition-all duration-300`}
       onClick={onClick}
     >
       {/* Header */}
       <div className="flex justify-between items-start mb-4 pb-4 border-b border-gray-100">
         <div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-1">{receipt.establishmentName}</h3>
+          <div className="flex items-center gap-3 mb-1">
+            <h3 className="text-2xl font-bold text-gray-900">{receipt.establishmentName}</h3>
+            {receipt.isOwner === true && (
+              <span className="px-3 py-1 bg-green-100 text-green-700 text-sm font-semibold rounded-full">
+                Owner
+              </span>
+            )}
+            {receipt.isOwner === false && (
+              <span className="px-3 py-1 bg-purple-100 text-purple-700 text-sm font-semibold rounded-full">
+                Member
+              </span>
+            )}
+          </div>
           <p className="text-sm text-gray-500">{formatDate(receipt.transactionDateTime)}</p>
           {receipt.transactionNumber && (
             <p className="text-xs text-gray-400 mt-1">Transaction: {receipt.transactionNumber}</p>
